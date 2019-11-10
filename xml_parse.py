@@ -57,22 +57,26 @@ colnames = {
 }
 
 colmeta = {
+    'colname': [],
     'metadata_str': [] 
+}
+
+empty_meta = {
+    'class': 'tableau',
+    'formula': 'null'
 }
 
 # get column names
 for column in root.iter('column'):
     colnames['colname'].append(column.attrib['name'])
-
-# get column formulas
-for column in root.iter('column'):
     for i in column:
-        colmeta['metadata_str'].append(i.attrib)
+        if i.attrib == {}:
+            colmeta['colname'].append(column.attrib['name'])
+            colmeta['metadata_str'].append(empty_meta)
+        else:
+            colmeta['colname'].append(column.attrib['name'])
+            colmeta['metadata_str'].append(i.attrib)
 
-        for 'formula' in i.attrib:
-            print(i.attrib['formula'])
-
-# create dataframes and join data
-
+# create dataframes
 cn_df = pandas.DataFrame(colnames)
 cm_df = pandas.DataFrame(colmeta)
