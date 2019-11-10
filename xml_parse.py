@@ -58,25 +58,29 @@ colnames = {
 
 colmeta = {
     'colname': [],
-    'metadata_str': [] 
+    'class': [],
+    'formula': []
 }
 
-empty_meta = {
-    'class': 'tableau',
-    'formula': 'null'
-}
-
-# get column names
+# get column names and formulas
 for column in root.iter('column'):
     colnames['colname'].append(column.attrib['name'])
     for i in column:
         if i.attrib == {}:
             colmeta['colname'].append(column.attrib['name'])
-            colmeta['metadata_str'].append(empty_meta)
+            colmeta['class'].append('null')
+            colmeta['formula'].append('null')
         else:
             colmeta['colname'].append(column.attrib['name'])
-            colmeta['metadata_str'].append(i.attrib)
+            colmeta['class'].append(i.attrib['class'])
+            colmeta['formula'].append(i.attrib['formula'])
 
 # create dataframes
 cn_df = pandas.DataFrame(colnames)
 cm_df = pandas.DataFrame(colmeta)
+
+# ToDo: 
+# * Should add more columns to colnames (might be valuable)
+# * refactor into a function
+# * test on other datasets
+# * add datasource column
