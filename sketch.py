@@ -53,3 +53,23 @@
 #3rd iteration
     
 #create dictionary to hold values
+
+####################################################################
+
+for column in root.iter('column'):
+    colnames['colname'].append(column.attrib['name'])
+    #colnames['caption'].append(column.attrib['caption'])
+    colnames['datatype'].append(column.attrib['datatype'])
+    #colnames['param-domain-type'].append(column.attrib['param-domain-type'])
+    colnames['role'].append(column.attrib['role'])
+    #colnames['type'].append(column.attrib['type'])
+    #colnames['value'].append(column.attrib['value'])
+    for i in column:
+        if i.attrib == {}:
+            colmeta['colname'].append(column.attrib['name'])
+            colmeta['class'].append('not applicable')
+            colmeta['formula'].append('not applicable')
+        else:
+            colmeta['colname'].append(column.attrib['name'])
+            colmeta['class'].append(i.attrib['class'])
+            colmeta['formula'].append(i.attrib['formula'])

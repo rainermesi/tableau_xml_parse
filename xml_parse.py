@@ -15,7 +15,9 @@ root = tree.getroot()
 # create variables for saving
 
 colnames = {
-    'colname': []
+    'colname': [],
+    'datatype': [],
+    'role': []
 }
 
 colmeta = {
@@ -27,6 +29,8 @@ colmeta = {
 # get column names and formulas
 for column in root.iter('column'):
     colnames['colname'].append(column.attrib['name'])
+    colnames['datatype'].append(column.attrib['datatype'])
+    colnames['role'].append(column.attrib['role'])
     for i in column:
         if i.attrib == {}:
             colmeta['colname'].append(column.attrib['name'])
@@ -45,8 +49,7 @@ cm_df = pandas.DataFrame(colmeta)
 joined_df = cn_df.merge(cm_df, on='colname', how='left' )
 
 # ToDo: 
-# * Should add more columns to colnames (might be valuable)
+# X Should add more columns to colnames (might be valuable)
 # * refactor into a function
 # * test on other datasets
 # * add datasource column
-
