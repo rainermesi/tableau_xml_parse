@@ -79,6 +79,9 @@ for column in root.iter('column'):
 cn_df = pandas.DataFrame(colnames)
 cm_df = pandas.DataFrame(colmeta)
 
+#cant join, columns in int64/str format
+joined_df = pandas.DataFrame.join(cn_df,cm_df, on='colname', how='left' )
+
 # ToDo: 
 # * Should add more columns to colnames (might be valuable)
 # * refactor into a function
