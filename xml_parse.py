@@ -22,7 +22,7 @@ for element in iter:
         text = element.text
         text = len(text) > 40 and text[:40]+ "..." or text
         print("\t\tText:", repr(text))
-    if element.getchildren():
+    if list(element):
         for child in element:
             print("\t\tElement", child.tag, ":", child.text)
         if child.tail:
@@ -44,7 +44,7 @@ for element in iter:
             text = element.text
             text = len(text) > 40 and text[:40]+ "..." or text
             print("\t\tText:", repr(text))
-        if element.getchildren():
+        if list(element):
             for child in element:
                 print("\t\tElement", child.tag, ":", child.text)
             if child.tail:
@@ -90,7 +90,7 @@ for column in root.iter('column'):
 cn_df = pandas.DataFrame(colnames)
 cm_df = pandas.DataFrame(colmeta)
 
-#use merge instead of join
+#use merge instead of join - dataframe with all columns used in workbook views
 joined_df = cn_df.merge(cm_df, on='colname', how='left' )
 
 # add datasource column(s) and other info found in the metadata element
@@ -105,7 +105,7 @@ elem_meta = {
 
 for element in iter_2:
     if element.tag == 'metadata-record':
-        if element.getchildren():
+        if list(element):
             for child in element:
                 if child.tag == 'remote-name':
                     elem_meta['remote-name'].append(child.text)
@@ -114,10 +114,11 @@ for element in iter_2:
                 if child.tag == 'parent-name':
                     elem_meta['parent-name'].append(child.text)
 
+# dataframe with all datasource columns
 em_df = pandas.DataFrame(elem_meta)
 
 # ToDo: 
 # X Should add more columns to colnames (might be valuable)
 # * refactor into a function
 # * test on other datasets
-# * add datasource column
+# X add datasource column
