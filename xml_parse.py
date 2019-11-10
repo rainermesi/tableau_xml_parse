@@ -4,7 +4,7 @@ import pandas
 
 #setwd
 
-os.chdir('C:\\Users\\Rainer\\Google Drive\\DATA\\Tableau DataSource')
+os.chdir('C:\\Users\\raine\\Google Drive\\DATA\\Tableau DataSource')
 os.getcwd()
 os.listdir()
 
@@ -44,3 +44,35 @@ fields_df = pandas.DataFrame(fields)
 fields_df.head()
 
 fields_df.to_csv('parse_result.txt', sep = '|')
+
+#########################################################################
+## DEBUG START
+#########################################################################
+
+# debug for statement to return formulas
+# create variables for saving
+
+colnames = {
+    'colname': []
+}
+
+colmeta = {
+    'metadata_str': [] 
+}
+
+# get column names
+for column in root.iter('column'):
+    colnames['colname'].append(column.attrib['name'])
+
+# get column formulas
+for column in root.iter('column'):
+    for i in column:
+        colmeta['metadata_str'].append(i.attrib)
+
+        for 'formula' in i.attrib:
+            print(i.attrib['formula'])
+
+# create dataframes and join data
+
+cn_df = pandas.DataFrame(colnames)
+cm_df = pandas.DataFrame(colmeta)
