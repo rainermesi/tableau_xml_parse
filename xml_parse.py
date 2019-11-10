@@ -7,6 +7,29 @@ import pandas
 tree = ET.parse('b2b_loyalty.xml')
 root = tree.getroot()
 
+# print full xml structure
+
+iter = root.getiterator()
+
+for element in iter:
+    print("Element:", element.tag)
+    if element.keys():
+        print("\tAttributes:")
+        for name, value in element.items():
+            print("\t\tName: '%s'"%(name))
+    print("\tChildren")
+    if element.text:
+        text = element.text
+        text = len(text) > 40 and text[:40]+ "..." or text
+        print("\t\tText:", repr(text))
+    if element.getchildren():
+        for child in element:
+            print("\t\tElement", child.tag, ":", child.text)
+        if child.tail:
+            text = child.tail
+            text = len(text) > 40 and text[:40] + "..." or text
+            print("t\tText:", repr(text))
+
 #########################################################################
 ## DEBUG START
 #########################################################################
@@ -47,6 +70,7 @@ cm_df = pandas.DataFrame(colmeta)
 
 #use merge instead of join
 joined_df = cn_df.merge(cm_df, on='colname', how='left' )
+
 
 # ToDo: 
 # X Should add more columns to colnames (might be valuable)
