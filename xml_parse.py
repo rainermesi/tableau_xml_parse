@@ -30,6 +30,28 @@ for element in iter:
             text = len(text) > 40 and text[:40] + "..." or text
             print("t\tText:", repr(text))
 
+# print only metadata elements
+
+for element in iter:
+    if element.tag == 'metadata-record':
+        print("Element:", element.tag)
+        if element.keys():
+            print("\tAttributes:")
+            for name, value in element.items():
+                print("\t\tName: '%s', Value: '%s'"%(name, value))
+        print("\tChildren")
+        if element.text:
+            text = element.text
+            text = len(text) > 40 and text[:40]+ "..." or text
+            print("\t\tText:", repr(text))
+        if element.getchildren():
+            for child in element:
+                print("\t\tElement", child.tag, ":", child.text)
+            if child.tail:
+                text = child.tail
+                text = len(text) > 40 and text[:40] + "..." or text
+                print("t\tText:", repr(text))
+
 #########################################################################
 ## DEBUG START
 #########################################################################
@@ -71,6 +93,28 @@ cm_df = pandas.DataFrame(colmeta)
 #use merge instead of join
 joined_df = cn_df.merge(cm_df, on='colname', how='left' )
 
+# add datasource column(s) and other info found in the metadata element
+
+iter_2 = root.getiterator()
+
+elem_meta = {
+    'remote-name': [],
+    'local-name': [],
+    'parent-name': [],
+}
+
+for element in iter_2:
+    if element.tag == 'metadata-record':
+        if element.getchildren():
+            for child in element:
+                if child.tag == 'remote-name':
+                    elem_meta['remote-name'].append(child.text)
+                if child.tag == 'local-name':
+                    elem_meta['local-name'].append(child.text)
+                if child.tag == 'parent-name':
+                    elem_meta['parent-name'].append(child.text)
+
+em_df = pandas.DataFrame(elem_meta)
 
 # ToDo: 
 # X Should add more columns to colnames (might be valuable)
