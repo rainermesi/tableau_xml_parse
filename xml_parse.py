@@ -30,8 +30,8 @@ for column in root.iter('column'):
     for i in column:
         if i.attrib == {}:
             colmeta['colname'].append(column.attrib['name'])
-            colmeta['class'].append('null')
-            colmeta['formula'].append('null')
+            colmeta['class'].append('not applicable')
+            colmeta['formula'].append('not applicable')
         else:
             colmeta['colname'].append(column.attrib['name'])
             colmeta['class'].append(i.attrib['class'])
@@ -41,11 +41,12 @@ for column in root.iter('column'):
 cn_df = pandas.DataFrame(colnames)
 cm_df = pandas.DataFrame(colmeta)
 
-#cant join, columns in int64/str format
-joined_df = pandas.DataFrame.join(cn_df,cm_df, on='colname', how='left' )
+#use merge instead of join
+joined_df = cn_df.merge(cm_df, on='colname', how='left' )
 
 # ToDo: 
 # * Should add more columns to colnames (might be valuable)
 # * refactor into a function
 # * test on other datasets
 # * add datasource column
+
