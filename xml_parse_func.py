@@ -22,7 +22,7 @@ def xml_parse(xmlfile):
     xmlroot = ET.parse(xmlfile).getroot()
     xmliterator = xmlroot.getiterator()
 
-    for column in root.iter('column'):
+    for column in xmlroot.iter('column'):
         col_names['colname'].append(column.attrib['name'])
         col_names['datatype'].append(column.attrib['datatype'])
         col_names['role'].append(column.attrib['role'])
