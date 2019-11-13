@@ -4,3 +4,7 @@ mus3_asis.xml
 parse_result.txt
 metada_record.txt
 sketch.py
+data/metadata_NPS.csv
+data/columns_NPS.csv
+data/columns_B2B.csv
+data/metadata_B2B.csv

@@ -92,7 +92,7 @@ cm_df = pandas.DataFrame(colmeta)
 
 #use merge instead of join - dataframe with all columns used in workbook views
 joined_df = cn_df.merge(cm_df, on='colname', how='left' )
-
+ 
 # add datasource column(s) and other info found in the metadata element
 
 iter_2 = root.getiterator()
@@ -119,6 +119,6 @@ em_df = pandas.DataFrame(elem_meta)
 
 # ToDo: 
 # X Should add more columns to colnames (might be valuable)
-# * refactor into a function
-# * test on other datasets
+# X refactor into a function
+# X test on other datasets
 # X add datasource column

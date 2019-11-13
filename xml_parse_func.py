@@ -1,3 +1,10 @@
+# * mus3asis colnames error, why?
+# * add into TkInter 
+# * input and output selectable
+# * add ability to loop through multiple xml files and append into single datasource
+
+
+
 import os
 import xml.etree.ElementTree as ET
 import pandas
@@ -14,9 +21,9 @@ def xml_parse(xmlfile):
         'formula': []
     }
     data_meta = {
-    'remote-name': [],
-    'local-name': [],
-    'parent-name': [],
+        'remote-name': [],
+        'local-name': [],
+        'parent-name': [],
     }
 
     xmlroot = ET.parse(xmlfile).getroot()
@@ -50,4 +57,4 @@ def xml_parse(xmlfile):
     pandas.DataFrame(col_names).merge(pandas.DataFrame(col_meta), on='colname', how='left' ).to_csv(r'C:\Users\raine\Google Drive\DATA\Tableau DataSource\columns.csv')
     pandas.DataFrame(data_meta).to_csv(r'C:\Users\raine\Google Drive\DATA\Tableau DataSource\metadata.csv')
 
-
+xml_parse(r'C:\Users\raine\Google Drive\DATA\Tableau DataSource\Transactional_NPS.xml')
